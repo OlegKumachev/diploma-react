@@ -1,0 +1,45 @@
+/* Новые стили для навигации */
+
+.navbar {
+    display: flex;
+    justify-content: 10px;
+    align-items: center;
+    background-color: #f8f9fa; /* Цвет фона навигационной панели */
+    padding: 10px 20px; /* Внутренние отступы */
+    margin-right: auto;
+  }
+  
+  .navbar-brand {
+    display: flex; /* Добавляем flex для .navbar-brand */
+    align-items: center; /* Выравниваем элементы по центру */
+    text-decoration: none; /* Убираем подчеркивание ссылок */
+    color: #343a40; /* Цвет текста */
+    
+  }
+  
+  .navbar-brand img {
+    height: 32px; /* Высота логотипа */
+    width: auto; /* Автоматическая ширина для поддержки адаптивности */
+    margin-right: 10px; /* Добавляем отступ справа от логотипа */
+  }
+  
+  .navbar-nav {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-left: auto;
+  }
+  
+  .nav-item {
+    margin-right: 20px;
+  }
+  
+  .nav-item:last-child {
+    margin-right: 0;
+  }
+  
+  .nav-link:hover {
+    color: #ff748b; /* Цвет ссылок при наведении */
+  }
+  
