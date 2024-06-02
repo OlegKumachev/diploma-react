@@ -4,23 +4,23 @@
     display: flex;
     justify-content: 10px;
     align-items: center;
-    background-color: #f8f9fa; /* Цвет фона навигационной панели */
-    padding: 10px 20px; /* Внутренние отступы */
+    background-color: #f8f9fa; 
+    padding: 10px 20px; 
     margin-right: auto;
   }
   
   .navbar-brand {
-    display: flex; /* Добавляем flex для .navbar-brand */
-    align-items: center; /* Выравниваем элементы по центру */
-    text-decoration: none; /* Убираем подчеркивание ссылок */
-    color: #343a40; /* Цвет текста */
+    display: flex; 
+    align-items: center; 
+    text-decoration: none; 
+    color: #343a40;
     
   }
   
   .navbar-brand img {
-    height: 32px; /* Высота логотипа */
-    width: auto; /* Автоматическая ширина для поддержки адаптивности */
-    margin-right: 10px; /* Добавляем отступ справа от логотипа */
+    height: 32px;
+    width: auto; 
+    margin-right: 10px; 
   }
   
   .navbar-nav {
@@ -40,6 +40,6 @@
   }
   
   .nav-link:hover {
-    color: #ff748b; /* Цвет ссылок при наведении */
+    color: #ff748b; 
   }
   
