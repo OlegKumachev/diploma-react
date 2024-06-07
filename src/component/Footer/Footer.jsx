@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import './styleFooter.css'
+
 
 export const Footer = () => (
     <footer className="container bg-light footer">
