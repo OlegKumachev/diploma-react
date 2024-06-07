@@ -103,6 +103,7 @@ section {
 
 /* Banner */
 .banner {
+  display: flex;
   position: relative;
 }
 
@@ -216,6 +217,12 @@ section {
   outline: none;
   box-shadow: none;
 }
+
+.catalog-item-card img {
+  max-width: 200px; /* Adjust as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
 
 /* Footer */
 .footer {
