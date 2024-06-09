@@ -6,33 +6,53 @@ export const useProducts = () => {
     return useContext(ProductContext);
 };
 
-export const ProductProvider = ({ children }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export const ProductProvider = ({ children }) => { // Удаляем id из параметров
+    const [product, setProduct] = useState(null); 
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/api/items');
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
+    // Извлекаем id из props.location.pathname
+    const id = window.location.pathname.split('/').pop();
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await fetch(`http://localhost:7071/api/items/${id}`); 
+                if (!response.ok) {
+                    throw new Error('Failed to fetch product');
+                }
+                const data = await response.json();
+                setProduct(data); 
+                console.log(data);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProduct();
+    }, [id]); 
+    
+    const updateProduct = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`http://localhost:7071/api/items/${id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch product');
+            }
+            const data = await response.json();
+            setProduct(data);
+            setLoading(false);
+        } catch (error) {
+            setError(error);
+            setLoading(false);
         }
-        const data = await response.json();
-        setProducts(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
     };
 
-    fetchProducts();
-  }, []);
-
-  return (
-    <ProductContext.Provider value={{ products, loading, error }}>
-      {children}
-    </ProductContext.Provider>
-  );
+    return (
+        <ProductContext.Provider value={{ product, loading, error }}>
+            {children}
+        </ProductContext.Provider>
+    );
 };

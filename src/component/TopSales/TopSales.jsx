@@ -19,7 +19,7 @@ export const TopSales = () => (
             <div className="col-4">
               <div className="card">
               <img src="./src/img/products/sandals_keira.jpg"
-                    class="card-img-top img-fluid" alt="Босоножки 'Keira'"/>
+                    className="card-img-top img-fluid" alt="Босоножки 'Keira'"/>
                 <div className="card-body">
                   <p className="card-text">Босоножки 'Keira'</p>
                   <p className="card-text">7 600 руб.</p>
@@ -34,7 +34,7 @@ export const TopSales = () => (
                 <div className="card-body">
                   <p className="card-text">Супергеройские кеды</p>
                   <p className="card-text">1 400 руб.</p>
-                  <Link to="/products/1.html" class="btn btn-outline-primary">Заказать</Link>
+                  <Link to="/products/1.html" className="btn btn-outline-primary">Заказать</Link>
                 </div>
               </div>
             </div>

@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../Context/CartContext';
-import { useProducts } from '../../Context/ProductContext';
-
-
+import { useCatalog } from '../../Context/CatalogContext';
 
 const Catalog = () => {
-  const { products, loading, error } = useProducts();
+  const { catalogs, loading, error } = useCatalog();
   const { dispatch } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Все');
 
-  if (!products) return null;
+  if (!catalogs) return null;
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -25,7 +23,7 @@ const Catalog = () => {
     dispatch({ type: 'ADD_ITEM', payload: { id: product.id, quantity: 1 } });
   };
 
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = catalogs.filter((product) => {
     const matchesCategory = activeCategory === 'Все' || product.category === activeCategory;
     const matchesSearch = product.title.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -64,6 +62,7 @@ const Catalog = () => {
               {filteredProducts.map((product) => (
                 <div className="col-4" key={product.id}>
                   <div className="card catalog-item-card">
+                    
                     <img 
                       src={product.images[0]} 
                       className="card-img-top img-fluid" 
@@ -72,6 +71,7 @@ const Catalog = () => {
                     <div className="card-body">
                       <p className="card-text">{product.title}</p>
                       <p className="card-text">{product.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</p>
+                      {/* Используем Link для перехода на страницу продукта */}
                       <Link to={`/products/${product.id}`} className="btn btn-outline-primary">
                         Заказать
                       </Link>

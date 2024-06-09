@@ -36,14 +36,14 @@ export const MainPage = () => (
                 <div className="card-body">
                   <p className="card-text">Супергеройские кеды</p>
                   <p className="card-text">1 400 руб.</p>
-                  <Link to="/products/1.html" class="btn btn-outline-primary">Заказать</Link>
+                  <Link to="/products/1.html" className="btn btn-outline-primary">Заказать</Link>
                 </div>
               </div>
             </div>
           </div>
         </section>
-          <Catalog/>
-        
+          {/* <Catalog/>
+         */}
       </div>
     </div>
   </main>
