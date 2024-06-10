@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../Context/CartContext';
-import { useCatalog } from '../../Context/CatalogContext';
+import { useCatalogItems } from '../../Context/CatalogContext';
+import { useCatalogCategories } from '../../Context/CatalogCategoriesContext';
 
 const Catalog = () => {
-  const { catalogs, loading, error } = useCatalog();
+  const { categories, loading: categoriesLoading } = useCatalogCategories();
+  const { items: catalogs, loading: itemsLoading, hasMore, loadMoreItems } = useCatalogItems();
   const { dispatch } = useCart();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('Все');
 
-  if (!catalogs) return null;
+  useEffect(() => {
+    console.log('Categories:', categories);
+  }, [categories]);
+
+  if (categoriesLoading || itemsLoading) return <p>Loading...</p>;
+  if (!categories || !catalogs) return <p>Данные не загружены</p>;
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
@@ -29,9 +36,6 @@ const Catalog = () => {
     return matchesCategory && matchesSearch;
   });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
     <main className="container">
       <div className="row">
@@ -47,7 +51,7 @@ const Catalog = () => {
               />
             </form>
             <ul className="catalog-categories nav justify-content-center">
-              {['Все', 'Женская обувь', 'Мужская обувь', 'Обувь унисекс', 'Детская обувь'].map(category => (
+              {['Все', ...categories.map(cat => cat.title)].map(category => (
                 <li className="nav-item" key={category}>
                   <button 
                     className={`nav-link ${category === activeCategory ? 'active' : ''}`} 
@@ -62,7 +66,6 @@ const Catalog = () => {
               {filteredProducts.map((product) => (
                 <div className="col-4" key={product.id}>
                   <div className="card catalog-item-card">
-                    
                     <img 
                       src={product.images[0]} 
                       className="card-img-top img-fluid" 
@@ -71,7 +74,6 @@ const Catalog = () => {
                     <div className="card-body">
                       <p className="card-text">{product.title}</p>
                       <p className="card-text">{product.price.toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</p>
-                      {/* Используем Link для перехода на страницу продукта */}
                       <Link to={`/products/${product.id}`} className="btn btn-outline-primary">
                         Заказать
                       </Link>
@@ -86,9 +88,11 @@ const Catalog = () => {
                 </div>
               ))}
             </div>
-            <div className="text-center">
-              <button className="btn btn-outline-primary">Загрузить ещё</button>
-            </div>
+            {hasMore && (
+              <div className="text-center">
+                <button className="btn btn-outline-primary" onClick={loadMoreItems}>Загрузить ещё</button>
+              </div>
+            )}
           </section>
         </div>
       </div>

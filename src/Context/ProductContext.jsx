@@ -34,21 +34,6 @@ export const ProductProvider = ({ children }) => { // Удаляем id из п�
         fetchProduct();
     }, [id]); 
     
-    const updateProduct = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(`http://localhost:7071/api/items/${id}`);
-            if (!response.ok) {
-                throw new Error('Failed to fetch product');
-            }
-            const data = await response.json();
-            setProduct(data);
-            setLoading(false);
-        } catch (error) {
-            setError(error);
-            setLoading(false);
-        }
-    };
 
     return (
         <ProductContext.Provider value={{ product, loading, error }}>

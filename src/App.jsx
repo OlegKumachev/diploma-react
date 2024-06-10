@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+
 import {  Route, Routes } from 'react-router-dom';
 import { Header } from './component/Header/Header';
 import { Footer } from './component/Footer/Footer';
 import { HomePage } from './Pages/HomePage/HomePage';
 import { AboutPage } from './Pages/about/AboutPage';
-import { MainPage } from './Pages/MainPage/MainPage';
 import Catalog from './Pages/Catalog/Catalog';
 import { Contact } from './Pages/Contact/Contact';
 import { ErrorPage } from './Pages/ErrorPage/ErrorPage';
@@ -12,17 +11,17 @@ import { Banner } from './component/Banner/Banner';
 import  Card  from './Pages/Cart/Cart';
 import { CartProvider, } from './Context/CartContext';
 import { Product } from './Pages/Product/Product';
-import { CatalogProvider } from './Context/CatalogContext';
+import { CatalogCategoriesProvider } from './Context/CatalogCategoriesContext';
+import { CatalogItemsProvider } from './Context/CatalogContext';
 import { ProductProvider } from './Context/ProductContext';
 import './index.css'
 
-
 const App = () => (
-  <CatalogProvider>
-    <ProductProvider>
+  <CatalogCategoriesProvider>
+    <CatalogItemsProvider>
     <CartProvider>
     <div>
-      <Header />
+      <Header /> {/*header надо будет перенесть в компанетты */}
       <Banner/>
       <Routes>
         <Route path="/" element={<HomePage/>} />
@@ -36,8 +35,8 @@ const App = () => (
       <Footer />
     </div>
     </CartProvider>
-    </ProductProvider>
-  </CatalogProvider>
+    </CatalogItemsProvider>
+  </CatalogCategoriesProvider>
 
 )
 
