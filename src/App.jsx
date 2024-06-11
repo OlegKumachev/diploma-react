@@ -18,6 +18,7 @@ import './index.css'
 
 const App = () => (
   <CatalogCategoriesProvider>
+    <ProductProvider>
     <CatalogItemsProvider>
     <CartProvider>
     <div>
@@ -36,6 +37,7 @@ const App = () => (
     </div>
     </CartProvider>
     </CatalogItemsProvider>
+    </ProductProvider>
   </CatalogCategoriesProvider>
 
 )

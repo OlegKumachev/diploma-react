@@ -10,16 +10,17 @@ export const CatalogItemsProvider = ({ children }) => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const [offset, setOffset] = useState(0);
+    const [category, setCategory] = useState(null);
 
     useEffect(() => {
-        fetchItems(0);
-    }, []);
+        fetchItems();
+    }, [category]);
 
     const fetchItems = async (offset = 0) => {
         setLoading(true);
         try {
-            const response = await fetch(`http://localhost:7071/api/items?offset=${offset}`);
+            const categoryParam = category && category.id ? `&categoryId=${category.id}` : '';
+            const response = await fetch(`http://localhost:7071/api/items?offset=${offset}${categoryParam}`);
             const data = await response.json();
             setItems(prevItems => offset === 0 ? data : [...prevItems, ...data]);
             setHasMore(data.length === 6);
@@ -30,14 +31,8 @@ export const CatalogItemsProvider = ({ children }) => {
         }
     };
 
-    const loadMoreItems = () => {
-        const newOffset = offset + 6;
-        setOffset(newOffset);
-        fetchItems(newOffset);
-    };
-
     return (
-        <CatalogItemsContext.Provider value={{ items, loading, hasMore, loadMoreItems }}>
+        <CatalogItemsContext.Provider value={{ items, loading, hasMore, fetchItems, setCategory }}>
             {children}
         </CatalogItemsContext.Provider>
     );
