@@ -8,7 +8,7 @@ import Catalog from './Pages/Catalog/Catalog';
 import { Contact } from './Pages/Contact/Contact';
 import { ErrorPage } from './Pages/ErrorPage/ErrorPage';
 import { Banner } from './component/Banner/Banner';
-import  Card  from './Pages/Cart/Cart';
+import { Cart } from './component/Cart/Cart';
 import { CartProvider, } from './Context/CartContext';
 import { Product } from './Pages/Product/Product';
 import { CatalogCategoriesProvider } from './Context/CatalogCategoriesContext';
@@ -30,7 +30,7 @@ const App = () => (
         <Route path='/catalog' element={<Catalog/>} />
         <Route path='/contacts' element={<Contact/>} />
         <Route path='/404' element={<ErrorPage/>} />
-        <Route path='/cart' element={<Card/>}/>
+        <Route path='/cart' element={<Cart/>}/>
         <Route path="/products/:id" element={<Product />} />
       </Routes>
       <Footer />

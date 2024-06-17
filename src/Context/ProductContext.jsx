@@ -17,7 +17,7 @@ export const ProductProvider = ({ children }) => { // Удаляем id из п�
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const response = await fetch(`http://localhost:7071/api/items/${id}`); 
+                const response = await fetch(`http://localhost:7070/api/items/${id}`); 
                 if (!response.ok) {
                     throw new Error('Failed to fetch product');
                 }

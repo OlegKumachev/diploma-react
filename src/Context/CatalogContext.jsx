@@ -20,7 +20,7 @@ export const CatalogItemsProvider = ({ children }) => {
         setLoading(true);
         try {
             const categoryParam = category && category.id ? `&categoryId=${category.id}` : '';
-            const response = await fetch(`http://localhost:7071/api/items?offset=${offset}${categoryParam}`);
+            const response = await fetch(`http://localhost:7070/api/items?offset=${offset}${categoryParam}`);
             const data = await response.json();
             setItems(prevItems => offset === 0 ? data : [...prevItems, ...data]);
             setHasMore(data.length === 6);

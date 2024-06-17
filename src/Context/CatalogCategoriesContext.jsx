@@ -18,7 +18,7 @@ export const CatalogCategoriesProvider = ({ children }) => {
     const fetchCategories = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:7071/api/categories');
+            const response = await fetch('http://localhost:7070/api/categories');
             const data = await response.json();
             setCategories(data);
 
