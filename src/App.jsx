@@ -9,20 +9,14 @@ import { Contact } from './Pages/Contact/Contact';
 import { ErrorPage } from './Pages/ErrorPage/ErrorPage';
 import { Banner } from './component/Banner/Banner';
 import { Cart } from './component/Cart/Cart';
-import { CartProvider, } from './Context/CartContext';
 import { Product } from './Pages/Product/Product';
-import { CatalogCategoriesProvider } from './Context/CatalogCategoriesContext';
-import { CatalogItemsProvider } from './Context/CatalogContext';
-import { ProductProvider } from './Context/ProductContext';
+import { ContextProviders } from './Context/ContextProviders';
 import './index.css'
 
 const App = () => (
-  <CatalogCategoriesProvider>
-    <ProductProvider>
-    <CatalogItemsProvider>
-    <CartProvider>
+  <ContextProviders>
     <div>
-      <Header /> {/*header надо будет перенесть в компанетты */}
+      <Header />
       <Banner/>
       <Routes>
         <Route path="/" element={<HomePage/>} />
@@ -35,10 +29,7 @@ const App = () => (
       </Routes>
       <Footer />
     </div>
-    </CartProvider>
-    </CatalogItemsProvider>
-    </ProductProvider>
-  </CatalogCategoriesProvider>
+  </ContextProviders>
 
 )
 

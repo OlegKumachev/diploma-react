@@ -24,9 +24,8 @@ export const CatalogItemsProvider = ({ children }) => {
             const data = await response.json();
             setItems(prevItems => offset === 0 ? data : [...prevItems, ...data]);
             setHasMore(data.length === 6);
-        } catch (error) {
-            console.error('Ошибка при получении товаров:', error);
-        } finally {
+        } 
+        finally {
             setLoading(false);
         }
     };

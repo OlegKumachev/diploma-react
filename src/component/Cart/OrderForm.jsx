@@ -7,9 +7,14 @@ const OrderForm = () => {
     const [address, setAddress] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
+    const [agreement, setAgreement] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!agreement) {
+            alert("Необходимо согласиться с правилами доставки");
+            return;
+        }
         setIsSubmitting(true);
 
         const orderData = {
@@ -38,6 +43,8 @@ const OrderForm = () => {
                 dispatch({ type: 'CLEAR_CART' });
                 setPhone('');
                 setAddress('');
+                setAgreement(false);
+                localStorage.removeItem('cart');
             } else {
                 console.error('Ошибка при оформлении заказа:', response.statusText);
             }
@@ -52,27 +59,43 @@ const OrderForm = () => {
         <div>
             <h2>Оформление заказа</h2>
             {successMessage && <p>{successMessage}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Телефон</label>
+            <form className="card-body" onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label htmlFor="phone">Телефон</label>
                     <input 
                         type="tel" 
+                        className="form-control" 
+                        id="phone" 
+                        placeholder="Ваш телефон"
                         value={phone} 
-                        onChange={(e) => setPhone(e.target.value)} 
+                        onChange={(e) => setPhone(e.target.value)}
                         required 
                     />
                 </div>
-                <div>
-                    <label>Адрес</label>
+                <div className="form-group">
+                    <label htmlFor="address">Адрес доставки</label>
                     <input 
                         type="text" 
+                        className="form-control" 
+                        id="address" 
+                        placeholder="Адрес доставки"
                         value={address} 
-                        onChange={(e) => setAddress(e.target.value)} 
+                        onChange={(e) => setAddress(e.target.value)}
                         required 
                     />
                 </div>
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Оформление...' : 'Оформить заказ'}
+                <div className="form-group form-check">
+                    <input 
+                        type="checkbox" 
+                        className="form-check-input" 
+                        id="agreement" 
+                        checked={agreement}
+                        onChange={(e) => setAgreement(e.target.checked)}
+                    />
+                    <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
+                </div>
+                <button type="submit" className="btn btn-outline-secondary" disabled={isSubmitting}>
+                    {isSubmitting ? 'Оформление...' : 'Оформить'}
                 </button>
             </form>
         </div>

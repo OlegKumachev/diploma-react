@@ -6,12 +6,11 @@ export const useProducts = () => {
     return useContext(ProductContext);
 };
 
-export const ProductProvider = ({ children }) => { // Удаляем id из параметров
+export const ProductProvider = ({ children }) => {
     const [product, setProduct] = useState(null); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Извлекаем id из props.location.pathname
     const id = window.location.pathname.split('/').pop();
 
     useEffect(() => {
@@ -22,10 +21,7 @@ export const ProductProvider = ({ children }) => { // Удаляем id из п�
                     throw new Error('Failed to fetch product');
                 }
                 const data = await response.json();
-                setProduct(data); 
-                console.log(data);
-            } catch (error) {
-                setError(error);
+                setProduct(data);           
             } finally {
                 setLoading(false);
             }

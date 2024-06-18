@@ -1,15 +1,15 @@
 import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../../Context/ProductContext';
 import { useCart } from '../../Context/CartContext';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export const Product = () => {
     const { product, loading, error } = useProducts();
     const { dispatch, state: cartState } = useCart();
     const [quantity, setQuantity] = useState(1);
-    const [selectedSize, setSelectedSize] = useState(null); // State to track selected size
+    const [selectedSize, setSelectedSize] = useState(null);
 
-    // Проверяем, загрузились ли данные или произошла ошибка
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -30,7 +30,6 @@ export const Product = () => {
         } else {
             dispatch({ type: 'ADD_ITEM', payload: { ...product, quantity, size: selectedSize } });
         }
-        // Redirect to cart page after adding to cart
         window.location.href = "/cart";
     };
 
@@ -98,7 +97,7 @@ export const Product = () => {
                                 <button 
                                     className="btn btn-danger btn-block btn-lg"
                                     onClick={handleAddToCart}
-                                    disabled={!selectedSize} // Disable button if no size is selected
+                                    disabled={!selectedSize}
                                 >
                                     В корзину
                                 </button>

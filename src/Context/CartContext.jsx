@@ -1,11 +1,8 @@
-
 import React, { createContext, useReducer, useContext, useEffect } from 'react';
-
 
 const initialState = {
   items: JSON.parse(localStorage.getItem('cartItems')) || []
 };
-
 
 const cartReducer = (state, action) => {
   let updatedItems;

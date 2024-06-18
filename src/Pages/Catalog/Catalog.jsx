@@ -4,6 +4,16 @@ import { useCart } from '../../Context/CartContext';
 import { useCatalogItems } from '../../Context/CatalogContext';
 import { useCatalogCategories } from '../../Context/CatalogCategoriesContext';
 
+const Loader = () => (
+    <div className="preloader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  );
+  
+
 const Catalog = () => {
     const { categories, loading: categoriesLoading } = useCatalogCategories();
     const { items: catalogs, loading: itemsLoading, fetchItems, setCategory } = useCatalogItems();
@@ -15,7 +25,7 @@ const Catalog = () => {
     useEffect(() => {
     }, [categories]);
 
-    if (categoriesLoading || itemsLoading) return <p>Loading...</p>;
+    if (categoriesLoading || itemsLoading) return <p>{Loader()}</p>;
     if (!categories || !catalogs) return <p>Данные не загружены</p>;
 
     const handleSearchChange = (event) => {

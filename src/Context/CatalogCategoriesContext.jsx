@@ -1,4 +1,3 @@
-// CatalogCategoriesContext.jsx
 import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const CatalogCategoriesContext = createContext();
@@ -21,9 +20,6 @@ export const CatalogCategoriesProvider = ({ children }) => {
             const response = await fetch('http://localhost:7070/api/categories');
             const data = await response.json();
             setCategories(data);
-
-        } catch (error) {
-            console.error('Ошибка при получении категорий:', error);
         } finally {
             setLoading(false);
         }

@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom";
-import { useCatalog } from "../../Context/CatalogCategoriesContext";
-
 export const Categories = () => (
             <ul className="catalog-categories nav justify-content-center">
               {['Все', 'Женская обувь', 'Мужская обувь', 'Обувь унисекс', 'Детская обувь'].map(category => (
