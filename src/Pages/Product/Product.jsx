@@ -1,4 +1,3 @@
-import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../../Context/ProductContext';
 import { useCart } from '../../Context/CartContext';
 import { useState } from 'react';
@@ -11,7 +10,12 @@ export const Product = () => {
 
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div className="preloader">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>;
     }
 
     if (!product) {
