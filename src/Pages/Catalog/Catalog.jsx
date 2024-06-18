@@ -13,7 +13,6 @@ const Catalog = () => {
     const [offset, setOffset] = useState(0);
 
     useEffect(() => {
-        console.log('Categories:', categories);
     }, [categories]);
 
     if (categoriesLoading || itemsLoading) return <p>Loading...</p>;
@@ -30,9 +29,6 @@ const Catalog = () => {
         fetchItems(0);
     };
 
-    const addToCart = (product) => {
-        dispatch({ type: 'ADD_ITEM', payload: { id: product.id, quantity: 1 } });
-    };
 
     const filteredProducts = catalogs.filter((product) => {
         const matchesCategory = !activeCategory.id || product.category === activeCategory.id;
@@ -81,12 +77,7 @@ const Catalog = () => {
                                             <Link to={`/products/${product.id}`} className="btn btn-outline-primary">
                                                 Заказать
                                             </Link>
-                                            <button 
-                                                className="btn btn-outline-secondary" 
-                                                onClick={() => addToCart(product)}
-                                            >
-                                                Добавить в корзину
-                                            </button>
+                            
                                         </div>
                                     </div>
                                 </div>

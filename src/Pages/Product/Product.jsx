@@ -1,23 +1,38 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useProducts } from '../../Context/ProductContext';
-import { useEffect } from 'react'
+import { useCart } from '../../Context/CartContext';
+import { useEffect, useState } from 'react';
 
 export const Product = () => {
     const { product, loading, error } = useProducts();
-   
+    const { dispatch, state: cartState } = useCart();
+    const [quantity, setQuantity] = useState(1);
+    const [selectedSize, setSelectedSize] = useState(null); // State to track selected size
+
     // Проверяем, загрузились ли данные или произошла ошибка
     if (loading) {
         return <div>Loading...</div>;
     }
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    // Проверяем, что данные о продукте загружены
     if (!product) {
         return <div>No product available</div>;
     }
+
+    const handleAddToCart = () => {
+        const existingItem = cartState.items.find(
+            item => item.id === product.id && item.size === selectedSize
+        );
+        if (existingItem) {
+            dispatch({
+                type: 'UPDATE_ITEM_QUANTITY',
+                payload: { id: product.id, size: selectedSize, quantity: existingItem.quantity + quantity }
+            });
+        } else {
+            dispatch({ type: 'ADD_ITEM', payload: { ...product, quantity, size: selectedSize } });
+        }
+        // Redirect to cart page after adding to cart
+        window.location.href = "/cart";
+    };
 
     return (
         <main className="container">
@@ -58,19 +73,35 @@ export const Product = () => {
                                         </tr>
                                         <tr>
                                             <td>Размеры</td>
-                                            <td></td>
+                                            <td>
+                                                {product.sizes.filter(sizeObj => sizeObj.available).map((sizeObj, index) => (
+                                                    <div key={index}>
+                                                        <button
+                                                            className={`btn ${selectedSize === sizeObj.size ? 'btn-primary' : 'btn-secondary'}`}
+                                                            onClick={() => setSelectedSize(sizeObj.size)}
+                                                        >
+                                                            {sizeObj.size}
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div className="text-center">
                                     <p>Количество: <span className="btn-group btn-group-sm pl-2">
-                                        <button className="btn btn-secondary">-</button>
-                                        <span className="btn btn-outline-primary">1</span>
-                                        <button className="btn btn-secondary">+</button>
-                                    </span>
-                                    </p>
+                                        <button className="btn btn-secondary" onClick={() => setQuantity(Math.max(quantity - 1, 1))}>-</button>
+                                        <span className="btn btn-outline-primary">{quantity}</span>
+                                        <button className="btn btn-secondary" onClick={() => setQuantity(quantity + 1)}>+</button>
+                                    </span></p>
                                 </div>
-                                <button className="btn btn-danger btn-block btn-lg">В корзину</button>
+                                <button 
+                                    className="btn btn-danger btn-block btn-lg"
+                                    onClick={handleAddToCart}
+                                    disabled={!selectedSize} // Disable button if no size is selected
+                                >
+                                    В корзину
+                                </button>
                             </div>
                         </div>
                     </section>
